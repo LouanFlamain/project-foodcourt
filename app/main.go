@@ -2,9 +2,10 @@ package main
 
 import (
 	"fmt"
-	"net/http"
-	"os"
 	"project/foodcourt/database"
+	"project/foodcourt/routes"
+
+	"github.com/gofiber/fiber/v3"
 )
 
 func main(){
@@ -13,16 +14,24 @@ func main(){
 	db := database.InitDb()
 	defer db.Close()
 
-	fmt.Println(os.Getenv("MARIADB_ROOT_PASSWORD"))
+	app := fiber.New();
 
-	//handler
+	//router
 
+	routes.SetRoute(app)
 
 	//démarre le serveur web
 
-	err := http.ListenAndServe(":8097", nil)
+	err := app.Listen(":8097")
 
 	if err != nil {
-		fmt.Printf("le serveur ne peux pas être lancé : %v\n", err)
+		fmt.Printf("Le lancement du serveur a échoué : %v\n", err)
 	}
+
+
+}
+
+type Response struct {
+	State string `json:"state"`
+	Code int `json:"code"`
 }
