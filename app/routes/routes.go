@@ -2,6 +2,7 @@ package routes
 
 import (
 	admin_routes "project/foodcourt/routes/admin"
+	auth_routes "project/foodcourt/routes/auth"
 	customer_routes "project/foodcourt/routes/customer"
 	seller_routes "project/foodcourt/routes/seller"
 
@@ -17,6 +18,11 @@ func SetRoute(app *fiber.App){
 		c.Set("Content-Type", "application/json")
 		return c.Next()
 	})
+
+	//router vers auth (en suicant api)
+
+	authGroup := api.Group("/auth")
+	auth_routes.SetUpAuthRoute(authGroup)
 
 
 	//router vers admin (en suivant api)

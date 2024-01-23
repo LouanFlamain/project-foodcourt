@@ -2,9 +2,9 @@ package admin_routes
 
 import "github.com/gofiber/fiber/v3"
 
-func SetUpAdminRoute(group fiber.Router){
+func SetUpAdminRoute(route fiber.Router){
 
-	group.Get("/", func(c fiber.Ctx) error {
+	route.Get("/", func(c fiber.Ctx) error {
 		return c.SendString("/api/admin")
 	})
 }
