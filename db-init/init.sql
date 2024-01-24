@@ -1,0 +1,54 @@
+CREATE DATABASE IF NOT EXISTS foodcourt_db;
+USE foodcourt_db;
+
+CREATE TABLE IF NOT EXISTS users (
+    id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    username VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    picture VARCHAR(255) NOT NULL DEFAULT 'default',
+    roles VARCHAR(10) NOT NULL DEFAULT 'customer'
+);
+
+CREATE TABLE IF NOT EXISTS restaurant (
+    id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    picture VARCHAR(255) NOT NULL DEFAULT 'default',
+    location VARCHAR(255) NOT NULL,
+    description LONGTEXT,
+    categoryId INT NOT NULL,
+    draft BOOLEAN NOT NULL DEFAULT 0
+
+);
+
+CREATE TABLE IF NOT EXISTS restaurant_category (
+    id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    name VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS commande (
+    id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    date DATETIME NOT NULL,
+    userId INT NOT NULL,
+    restaurantId INT NOT NULL,
+    numberCustomers INT NOT NULL DEFAULT 1,
+    suggestion TEXT,
+    state VARCHAR(255) NOT NULL DEFAULT 'waiting'
+);
+
+CREATE TABLE IF NOT EXISTS carte (
+    id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    restaurantId INT NOT NULL,
+    description TEXT NOT NULL,
+    menu TEXT NOT NULL,
+    price FLOAT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS feedback (
+    id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    reservationId INT NOT NULL,
+    restaurantId INT NOT NULL,
+    description VARCHAR(255)
+);
+

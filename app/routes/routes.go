@@ -12,30 +12,23 @@ import (
 func SetRoute(app *fiber.App){
 
 	//création du groupe d'url commençant par /api
-	api := app.Group("/api")
+	api := app.Group("/api")    
 
 	api.Use(func(c fiber.Ctx) error {
 		c.Set("Content-Type", "application/json")
 		return c.Next()
 	})
 
-	//router vers auth (en suicant api)
+	//router
 
 	authGroup := api.Group("/auth")
 	auth_routes.SetUpAuthRoute(authGroup)
 
-
-	//router vers admin (en suivant api)
-
 	adminGroup := api.Group("/admin")
 	admin_routes.SetUpAdminRoute(adminGroup)
 
-	//router vers customer (en suivant api)
-
 	customerGroup := api.Group("/customer")
 	customer_routes.SetUpCustomerRoute(customerGroup)
-
-	//router vers seller (en suivant api)
 
 	sellerGroup := api.Group("/seller")
 	seller_routes.SetUpSellerRoute(sellerGroup)
