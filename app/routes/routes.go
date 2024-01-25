@@ -24,16 +24,16 @@ func SetRoute(app *fiber.App, myStore *store.Store){
 	//router
 
 	authGroup := api.Group("/auth")
-	auth_routes.SetUpAuthRoute(authGroup)
+	auth_routes.SetUpAuthRoute(authGroup, myStore)
 
 	adminGroup := api.Group("/admin")
 	admin_routes.SetUpAdminRoute(adminGroup, myStore)
 
 	customerGroup := api.Group("/customer")
-	customer_routes.SetUpCustomerRoute(customerGroup)
+	customer_routes.SetUpCustomerRoute(customerGroup, myStore)
 
 	sellerGroup := api.Group("/seller")
-	seller_routes.SetUpSellerRoute(sellerGroup)
+	seller_routes.SetUpSellerRoute(sellerGroup, myStore)
 
 
 
