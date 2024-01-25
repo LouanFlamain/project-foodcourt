@@ -11,20 +11,19 @@ CREATE TABLE IF NOT EXISTS users (
 );
 
 CREATE TABLE IF NOT EXISTS roles (
-    id INT AUTO_INCREMENT NOT NULL,
-    name VARCHAR(10) NOT NULL
-):
+    id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    name VARCHAR(255) NOT NULL
+);
 
 CREATE TABLE IF NOT EXISTS restaurant (
     id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     name VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL,
     picture VARCHAR(255) NOT NULL DEFAULT 'default',
-    location VARCHAR(255) NOT NULL,
     description LONGTEXT,
-    categoryId INT NOT NULL,
-    draft BOOLEAN NOT NULL DEFAULT 0
-
+    category_id INT NOT NULL,
+    draft BOOLEAN NOT NULL DEFAULT 0,
+    open BOOLEAN NOT NULL DEFAULT 0
 );
 
 CREATE TABLE IF NOT EXISTS restaurant_category (
@@ -49,7 +48,7 @@ CREATE TABLE IF NOT EXISTS commande_state (
 
 CREATE TABLE IF NOT EXISTS carte (
     id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-    restaurantId INT NOT NULL,
+    restaurant_id INT NOT NULL,
     description TEXT NOT NULL,
     menu TEXT NOT NULL,
     price FLOAT NOT NULL
@@ -57,8 +56,33 @@ CREATE TABLE IF NOT EXISTS carte (
 
 CREATE TABLE IF NOT EXISTS feedback (
     id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-    reservationId INT NOT NULL,
-    restaurantId INT NOT NULL,
+    reservation_id INT NOT NULL,
+    restaurant_id INT NOT NULL,
     description VARCHAR(255)
 );
 
+/*fake users*/
+
+INSERT INTO users (username, email, password, roles) VALUES ('admin', 'admin@email.com', 'admin', 2);
+INSERT INTO users (username, email, password, roles) VALUES ('client', 'client@email.com', 'client', 0);
+INSERT INTO users (username, email, password, roles) VALUES ('restaurateur', 'restaurateur@email.com', 'restaurateur', 1);
+
+
+/*fake restaurant*/
+
+INSERT INTO restaurant (name, email, picture, description, category_id, draft) VALUES ('restaurant1', 'restaurant1@email.com', 'default', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum', 0, true);
+INSERT INTO restaurant (name, email, picture, description, category_id, draft) VALUES ('restaurant2', 'restaurant2@email.com', 'default', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum', 1, false);
+INSERT INTO restaurant (name, email, picture, description, category_id, draft) VALUES ('restaurant3', 'restaurant3@email.com', 'default', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum', 1, true);
+
+/*restaurant category*/
+
+INSERT INTO restaurant_category (name) VALUES ('burger');
+INSERT INTO restaurant_category (name) VALUES ('thaïlandais');
+INSERT INTO restaurant_category (name) VALUES ('mexicain');
+
+/*roles */
+
+INSERT INTO roles(name) VALUES ('client');
+INSERT INTO roles(name) VALUES ('restaurateur');
+INSERT INTO roles(name) VALUES ('admin');
+/**/

@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"project/foodcourt/database"
 	"project/foodcourt/routes"
+	"project/foodcourt/store"
 
 	"github.com/gofiber/fiber/v3"
 )
@@ -16,9 +17,15 @@ func main(){
 
 	app := fiber.New();
 
+	//instancie le store
+
+	myStore := store.CreateStore(db)
+
+	fmt.Println(myStore)
+
 	//router
 
-	routes.SetRoute(app)
+	routes.SetRoute(app, myStore)
 
 	//démarre le serveur web
 

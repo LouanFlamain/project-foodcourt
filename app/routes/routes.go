@@ -1,15 +1,17 @@
 package routes
 
 import (
+	"project/foodcourt/handlers"
 	admin_routes "project/foodcourt/routes/admin"
 	auth_routes "project/foodcourt/routes/auth"
 	customer_routes "project/foodcourt/routes/customer"
 	seller_routes "project/foodcourt/routes/seller"
+	"project/foodcourt/store"
 
 	"github.com/gofiber/fiber/v3"
 )
 
-func SetRoute(app *fiber.App){
+func SetRoute(app *fiber.App, myStore *store.Store){
 
 	//création du groupe d'url commençant par /api
 	api := app.Group("/api")    
@@ -25,7 +27,7 @@ func SetRoute(app *fiber.App){
 	auth_routes.SetUpAuthRoute(authGroup)
 
 	adminGroup := api.Group("/admin")
-	admin_routes.SetUpAdminRoute(adminGroup)
+	admin_routes.SetUpAdminRoute(adminGroup, myStore)
 
 	customerGroup := api.Group("/customer")
 	customer_routes.SetUpCustomerRoute(customerGroup)
@@ -40,10 +42,12 @@ func SetRoute(app *fiber.App){
 
 		return c.JSON(response)
 	})
-	app.Get("/test", func(c fiber.Ctx) error {
-		response := Response{true, "/test"}
 
-		return c.JSON(response)
+	type MyRequestBody struct{
+		Test string `json:"test"`
+	}
+	app.Post("/test", func(c fiber.Ctx) error {
+		return handlers.GetAllRestaurant(c, myStore)
 	})
 }
 

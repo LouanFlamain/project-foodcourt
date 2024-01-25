@@ -2,13 +2,13 @@ package structure
 
 type RestaurantItem struct{
 	Id int `json:"id"`
-	Username string `json:"username"`
+	Name string `json:"name"`
 	Email string `json:"email"`
 	Picture string `json:"picture"`
-	Location string `json:"location"`
 	Description string `json:"description"`
 	CategoryId string `json:"category_id"`
 	Draft bool `json:"draft"`
+	Open bool `json:"open"`
 }
 
 type RestaurantCategoryItem struct{
@@ -19,10 +19,11 @@ type RestaurantCategoryItem struct{
 type RestaurantInterface interface{
 	CreateRestaurant(RestaurantItem)(error)
 	UpdateRestaurant(RestaurantItem)(RestaurantItem, error)
-	GetAllRestaurant()([]RestaurantCategoryItem, error)
-	GetOneRestaurant(id int)(RestaurantCategoryItem, error)
-	GetAllRestaurantByCategory(category_id int)([]RestaurantCategoryItem, error)
+	GetAllRestaurant()([]RestaurantItem, error)
+	GetOneRestaurantById(id int)(RestaurantItem, error)
+	GetAllRestaurantByCategory(category_id int)([]RestaurantItem, error)
 	DeleteRestaurant(id int)(error)
+	UpdateRestaurantOpenState(id int, open bool)(bool, error)
 }
 
 type RestaurantCategoryInterface interface{
