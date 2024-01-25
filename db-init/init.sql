@@ -7,8 +7,13 @@ CREATE TABLE IF NOT EXISTS users (
     email VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL,
     picture VARCHAR(255) NOT NULL DEFAULT 'default',
-    roles VARCHAR(10) NOT NULL DEFAULT 'customer'
+    roles INT NOT NULL DEFAULT 0
 );
+
+CREATE TABLE IF NOT EXISTS roles (
+    id INT AUTO_INCREMENT NOT NULL,
+    name VARCHAR(10) NOT NULL
+):
 
 CREATE TABLE IF NOT EXISTS restaurant (
     id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
@@ -30,11 +35,11 @@ CREATE TABLE IF NOT EXISTS restaurant_category (
 CREATE TABLE IF NOT EXISTS commande (
     id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     date DATETIME NOT NULL,
-    userId INT NOT NULL,
-    restaurantId INT NOT NULL,
-    numberCustomers INT NOT NULL DEFAULT 1,
-    suggestion TEXT,
-    state VARCHAR(255) NOT NULL DEFAULT 'waiting'
+    user_id INT NOT NULL,
+    restaurant_id INT NOT NULL,
+    content VARCHAR(255) NOT NULL,
+    commentaire VARCHAR(255),
+    state INT NOT NULL DEFAULT 0
 );
 
 CREATE TABLE IF NOT EXISTS commande_state (
