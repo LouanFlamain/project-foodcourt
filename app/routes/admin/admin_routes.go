@@ -22,7 +22,7 @@ func SetUpAdminRoute(route fiber.Router, myStore *store.Store){
 	//------restaurant------
 
 
-	//récupère TOUT les restaurants
+	//récupère TOUT les restaurants ouvert ou fermé
 	route.Get("/restaurant/all", func(c fiber.Ctx) error {
 		return handlers.GetAllRestaurant(c, myStore)
 	})
@@ -36,7 +36,23 @@ func SetUpAdminRoute(route fiber.Router, myStore *store.Store){
 		return handlers.DeleteRestaurant(c, myStore, id)
 	})
 
+	//récupère tout les restaurant en attente de validation d'un admin pour exister
+	route.Get("/restaurant/draft", func(c fiber.Ctx) error {
+		return handlers.GetDraftRestaurant(c, myStore)
+	})
+
+	//accepter le restaurant au sein du foodcourt
+	route.Patch("/restaurant/draft/:id", func(c fiber.Ctx) error {
+		id, err := strconv.Atoi(c.Params("id"))
+		if err != nil {
+			fmt.Println("erreur durant la conversion string -> id")
+		}
+		return handlers.PatchDraftRestaurant(c, myStore, id)
+	})
+
+	//créer une nouvelle catégorie de produits
 	route.Post("/restaurant/category", func(c fiber.Ctx) error {
+		
 		var body request.CreateCategoryRequestType
 
 		//parse le body

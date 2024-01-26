@@ -1,6 +1,7 @@
 package customer_routes
 
 import (
+	"project/foodcourt/handlers"
 	"project/foodcourt/store"
 
 	"github.com/gofiber/fiber/v3"
@@ -9,6 +10,9 @@ import (
 func SetUpCustomerRoute(route fiber.Router, myStore *store.Store){
 	route.Get("/", func(c fiber.Ctx) error {
 		return c.SendString("/api/customer")
+	})
+	route.Get("/restaurant/all", func(c fiber.Ctx) error {
+		return handlers.GetAllOpenRestaurant(c, myStore)
 	})
 
 	//restaurant

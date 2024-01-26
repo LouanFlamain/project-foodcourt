@@ -20,7 +20,7 @@ type CommandeStateItem struct {
 type CommandeInterface interface{
 	CreateCommande(CommandeItem)(int, error)
 	GetCommandeById(id int)(CommandeItem, error)
-	GetAllCommandeByRestaurantId(id int)(CommandeItem, error)
+	GetAllCommandeByRestaurantId(id int)([]CommandeItem, error)
 	UpdateCommande(id int, state int)(CommandeItem, error)
 }
 type CommandeStateInterface interface{
