@@ -50,13 +50,27 @@ CREATE TABLE IF NOT EXISTS carte (
     id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     restaurant_id INT NOT NULL,
     description TEXT NOT NULL,
-    menu TEXT NOT NULL,
     price FLOAT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS produits (
+    id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    produit VARCHAR(255) NOT NULL,
+    price FLOAT NOT NULL,
+    menu_id INT NOT NULL ,
+    category_id INT NOT NULL,
+    
+);
+CREATE TABLE IF NOT EXISTS produit_category_type (
+    id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    
 );
 
 CREATE TABLE IF NOT EXISTS feedback (
     id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-    reservation_id INT NOT NULL,
+    commande_id INT NOT NULL,
     restaurant_id INT NOT NULL,
     description VARCHAR(255)
 );
