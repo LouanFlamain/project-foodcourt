@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"encoding/json"
 	"foodcourt/app/api/response"
 	"foodcourt/app/auth"
 	"foodcourt/app/model"
@@ -9,9 +10,11 @@ import (
 	"github.com/gofiber/fiber/v3"
 )
 
-func RegisterHandler(c fiber.Ctx, userStore *stores.UserStore) error {
+func RegisterHandler(c fiber.Ctx, userStore *stores.Store) error {
 	var user model.UserItem
-	if err := c.BodyParser(&user); err != nil {
+	//mettre structure request
+	err := json.Unmarshal(c.Body(), "la tu mets la struct de la request")
+	if err != nil {
 		return c.JSON(fiber.Map{
 			"data": response.ErrorResponse(err.Error()),
 		})
@@ -44,9 +47,11 @@ func RegisterHandler(c fiber.Ctx, userStore *stores.UserStore) error {
 	})
 }
 
-func LoginHandler(c fiber.Ctx, userStore *stores.UserStore) error {
+func LoginHandler(c fiber.Ctx, userStore *stores.Store) error {
 	var credentials model.UserItem
-	if err := c.BodyParser(&credentials); err != nil {
+	//metttre la structure de la requête
+	err := json.Unmarshal(c.Body(), "la tu mets la struct de la request")
+	if err != nil {
 		return c.JSON(fiber.Map{
 			"data": response.ErrorResponse(err.Error()),
 		})

@@ -16,10 +16,7 @@ func main() {
 	cfg := config.LoadConfig()
 
 	// Initialisation de la base de données avec la configuration chargée
-	db, err := database.InitDb(cfg)
-	if err != nil {
-		log.Fatalf("Erreur lors de l'initialisation de la base de données : %v", err)
-	}
+	db := database.InitDb(cfg)
 	defer db.Close()
 
 	// Création de l'application Fiber

@@ -8,12 +8,12 @@ import (
 )
 
 func SetUpAuthRoute(route fiber.Router, myStore *stores.Store) {
-	route.Post("/register", func(c *fiber.Ctx) error {
-		return handlers.RegisterHandler(c, myStore.UserInterface)
+	route.Post("/register", func(c fiber.Ctx) error {
+		return handlers.RegisterHandler(c, myStore)
 	})
 
-	route.Post("/login", func(c *fiber.Ctx) error {
-		return handlers.LoginHandler(c, myStore.UserInterface)
+	route.Post("/login", func(c fiber.Ctx) error {
+		return handlers.LoginHandler(c, myStore)
 	})
 
 }

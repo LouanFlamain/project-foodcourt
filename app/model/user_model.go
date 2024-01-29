@@ -15,6 +15,7 @@ type UserInterface interface {
 	GetOneUser(id int) (UserItem, error)
 	UpdateUser(user UserItem) (bool, error)
 	DeleteUser(id int) (bool, error)
+	GetOneUserByUsername(string)(UserItem, error)
 }
 
 type RolesItem struct {
