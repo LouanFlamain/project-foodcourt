@@ -1,0 +1,56 @@
+projet-foodcourt/
+│
+├── docker-compose.yml
+├── Dockerfile
+├── go.mod
+├── go.sum
+├── main.go
+├── README.md
+│
+├── app/
+│   │
+│   ├── config/
+│   │   └── config.go
+│   │
+│   ├── auth/
+│   │   └── auth.go
+│   │
+│   ├── handlers/
+│   │   ├── restaurant_handler.go
+│   │   └── auth_handlers.go
+│   │
+│   ├── middleware/
+│   │   └── auth.go
+│   │
+│   ├── routes/
+│   │   ├── customer_routes.go
+|   |   ├── admin/
+│   │   |   └── admin_routes.go
+|   |   ├── auth/
+│   │   |   └── auth_routes.go
+|   |   ├── seller/
+│   │   |   └── seller_routes.go
+|   |   ├── customer/
+│   │   |   └── customer_routes.go
+│   │   └── routes.go
+│   │
+│   ├── model/
+│   │   ├── commande_models.go
+│   │   ├── restaurant_models.go
+│   │   ├── store_models.go
+│   │   └── user_models.go
+│   │
+│   ├── stores/
+│   │   ├── commande_state_store.go
+│   │   ├── commande_store.go
+│   │   ├── restaurant_category_store.go
+│   │   ├── restaurant_store.go
+│   │   ├── roles_store.go
+│   │   ├── user_store.go
+│   │   └── store.go
+│   │
+│   └── database/
+│       └── database.go
+│
+└── database/
+    └── init.sql

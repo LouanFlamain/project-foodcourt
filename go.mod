@@ -1,6 +1,11 @@
-module project/foodcourt
+module foodcourt
 
 go 1.21.6
+
+require (
+	github.com/dgrijalva/jwt-go v3.2.0+incompatible
+	golang.org/x/crypto v0.18.0
+)
 
 require (
 	github.com/andybalholm/brotli v1.1.0 // indirect
