@@ -3,23 +3,24 @@ package database
 import (
 	"database/sql"
 	"fmt"
+	"foodcourt/app/config"
 	"log"
 
 	"github.com/go-sql-driver/mysql"
 )
 
-func InitDb() *sql.DB  {
+func InitDb(config *config.Config) *sql.DB {
 	conf := mysql.Config{
-		User: "root",
-		Passwd: "root",
-		Net: "tcp",
-		Addr: "database:3306",
-		DBName: "foodcourt_db",
+		User:                 config.DBUsername,
+		Passwd:               config.DBPassword,
+		Net:                  "tcp",
+		Addr:                 config.DBHost,
+		DBName:               config.DBName,
 		AllowNativePasswords: true,
 	}
 	db, err := sql.Open("mysql", conf.FormatDSN())
 
-	if(err != nil){
+	if err != nil {
 		log.Fatal(err)
 		fmt.Println("database connexion failed")
 	}
@@ -30,6 +31,6 @@ func InitDb() *sql.DB  {
 	}
 
 	fmt.Println("database connexion successful")
-	
+
 	return db
 }

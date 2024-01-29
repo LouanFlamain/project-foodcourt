@@ -3,24 +3,22 @@ package admin_routes
 import (
 	"encoding/json"
 	"fmt"
-	"project/foodcourt/handlers"
-	"project/foodcourt/store"
-	"project/foodcourt/structure"
-	"project/foodcourt/web/api/request"
+	"foodcourt/app/api/request"
+	"foodcourt/app/handlers"
+	"foodcourt/app/model"
+	"foodcourt/app/stores"
 	"strconv"
 
 	"github.com/gofiber/fiber/v3"
 )
 
-func SetUpAdminRoute(route fiber.Router, myStore *store.Store){
+func SetUpAdminRoute(route fiber.Router, myStore *stores.Store) {
 
 	route.Get("/", func(c fiber.Ctx) error {
 		return c.SendString("/api/admin")
 	})
 
-
 	//------restaurant------
-
 
 	//récupère TOUT les restaurants ouvert ou fermé
 	route.Get("/restaurant/all", func(c fiber.Ctx) error {
@@ -52,7 +50,7 @@ func SetUpAdminRoute(route fiber.Router, myStore *store.Store){
 
 	//créer une nouvelle catégorie de produits
 	route.Post("/restaurant/category", func(c fiber.Ctx) error {
-		
+
 		var body request.CreateCategoryRequestType
 
 		//parse le body
@@ -64,7 +62,7 @@ func SetUpAdminRoute(route fiber.Router, myStore *store.Store){
 				"error": "cannot parse JSON",
 			})
 		}
-		return handlers.CreateNewRestaurantCategory(c, myStore, structure.RestaurantCategoryItem{Name: body.Name})
+		return handlers.CreateNewRestaurantCategory(c, myStore, model.RestaurantCategoryItem{Name: body.Name})
 
 	})
 }
