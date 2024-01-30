@@ -33,7 +33,7 @@ services:
       dockerfile: ./Dockerfile
     restart: on-failure
     ports:
-      - "8097:8097"
+      - "8095:8095"
     environment:
       - DB_USERNAME=root
       - DB_PASSWORD=root

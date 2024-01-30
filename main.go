@@ -32,7 +32,7 @@ func main() {
 	// Récupération du port depuis les variables d'environnement, avec une valeur par défaut
 	port := os.Getenv("PORT")
 	if port == "" {
-		port = "8097" // Port par défaut
+		port = "8095" // Port par défaut
 	}
 
 	// Démarrage du serveur web sur le port spécifié
