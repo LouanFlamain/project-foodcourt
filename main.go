@@ -17,6 +17,7 @@ func main() {
 
 	// Initialisation de la base de données avec la configuration chargée
 	db := database.InitDb(cfg)
+
 	defer db.Close()
 
 	// Création de l'application Fiber
@@ -31,7 +32,7 @@ func main() {
 	// Récupération du port depuis les variables d'environnement, avec une valeur par défaut
 	port := os.Getenv("PORT")
 	if port == "" {
-		port = "809" // Port par défaut
+		port = "8097" // Port par défaut
 	}
 
 	// Démarrage du serveur web sur le port spécifié

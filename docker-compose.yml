@@ -21,7 +21,7 @@ services:
           "healthcheck.sh",
           "--su-mysql",
           "--connect",
-          "--innodb_initialized"
+          "--innodb_initialized",
         ]
       interval: 1s
       timeout: 1s
@@ -33,7 +33,7 @@ services:
       dockerfile: ./Dockerfile
     restart: on-failure
     ports:
-      - "8095:8080"
+      - "8097:8097"
     environment:
       - DB_USERNAME=root
       - DB_PASSWORD=root

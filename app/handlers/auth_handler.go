@@ -13,7 +13,7 @@ import (
 func RegisterHandler(c fiber.Ctx, userStore *stores.Store) error {
 	var user model.UserItem
 	//mettre structure request
-	err := json.Unmarshal(c.Body(), "la tu mets la struct de la request")
+	err := json.Unmarshal(c.Body(), "la tu mets le model de la request")
 	if err != nil {
 		return c.JSON(fiber.Map{
 			"data": response.ErrorResponse(err.Error()),
