@@ -55,9 +55,9 @@ CREATE TABLE IF NOT EXISTS carte (
 
 CREATE TABLE IF NOT EXISTS product (
     id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-    produit VARCHAR(255) NOT NULL,
+    product VARCHAR(255) NOT NULL,
     price FLOAT NOT NULL,
-    menu_id INT NOT NULL ,
+    carte_id INT NOT NULL ,
     category_id INT NOT NULL,
     
 );
