@@ -1,6 +1,8 @@
 package handlers
 
 import (
+	"fmt"
+	"foodcourt/app/api/request"
 	"foodcourt/app/api/response"
 	"foodcourt/app/model"
 	"foodcourt/app/stores"
@@ -40,6 +42,63 @@ func GetAllOpenRestaurant(c fiber.Ctx, stores *stores.Store) error {
 	})
 	return err
 
+}
+
+func CreateRestaurant(c fiber.Ctx, store *stores.Store, body request.CreateRestaurantRequestType)error {
+
+
+	//vérifie que l'utilisateur n'a pas déjà un compte enregistré avec le même mail
+	err := store.VerifyUserByMail(body.Email)
+	fmt.Println(err)
+	if err == nil {
+		err := c.JSON(fiber.Map{
+			"data" : fiber.Map{
+				"success" : false,
+				"error" : "email is already use",
+			},
+		})
+		return err
+	}
+	//création d'un utilisateur de type restaurateur
+	newUser := model.UserItem{
+		Username: body.Username,
+		Password: body.Password,
+		Email: body.Email,
+		Roles: 1,
+	}
+	id, err := store.AddRestaurateur(newUser)
+	if err != nil {
+		err := c.JSON(fiber.Map{
+			"data" : fiber.Map{
+				"success" : false,
+				"error" : err,
+			},
+		})
+		return err
+	}
+	newRestaurant := model.RestaurantItem{
+		Name: body.Name,
+		Email: body.Email,
+		Description: body.Description,
+		CategoryId: body.CategoryId,
+		UserId: id,
+	}
+	err = store.CreateRestaurant(newRestaurant)
+
+	if err != nil{
+		err = c.JSON(fiber.Map{
+			"data" : fiber.Map{
+				"success" : false,
+				"error" : err,
+			},
+		})
+	}
+
+	return c.JSON(fiber.Map{
+		"data" : fiber.Map{
+			"message" : "Restaurant crée avec succès !",
+		},
+	})
 }
 
 //----------------------------------------------------seller------------------------------------------------------------

@@ -15,7 +15,11 @@ func NewRestaurantStore(db *sql.DB) *RestaurantStore {
 	}
 }
 
-func (r *RestaurantStore) CreateRestaurant(model.RestaurantItem) error {
+func (r *RestaurantStore) CreateRestaurant(restaurant model.RestaurantItem) error {
+	_, err := r.DB.Exec("INSERT INTO restaurant (name, email, description, category_id, user_id) VALUES (?, ?, ?, ?, ?)", restaurant.Name, restaurant.Email, restaurant.Description, restaurant.CategoryId, restaurant.UserId)
+	if err != nil {
+		return err
+	}
 	return nil
 }
 

@@ -19,11 +19,12 @@ CREATE TABLE IF NOT EXISTS restaurant (
     id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     name VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL,
-    picture VARCHAR(255) NOT NULL DEFAULT 'default',
+    picture VARCHAR(255) NOT NULL DEFAULT 'default.png',
     description LONGTEXT,
     category_id INT NOT NULL,
     draft BOOLEAN NOT NULL DEFAULT 0,
-    open BOOLEAN NOT NULL DEFAULT 0
+    open BOOLEAN NOT NULL DEFAULT 0,
+    user_id INT NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS restaurant_category (
@@ -79,13 +80,15 @@ CREATE TABLE IF NOT EXISTS feedback (
 INSERT INTO users (username, email, password, roles) VALUES ('admin', 'admin@email.com', 'admin', 2);
 INSERT INTO users (username, email, password, roles) VALUES ('client', 'client@email.com', 'client', 0);
 INSERT INTO users (username, email, password, roles) VALUES ('restaurateur', 'restaurateur@email.com', 'restaurateur', 1);
+INSERT INTO users (username, email, password, roles) VALUES ('restaurateur2', 'restaurateur2@email.com', 'restaurateur', 1);
+INSERT INTO users (username, email, password, roles) VALUES ('restaurateur3', 'restaurateur3@email.com', 'restaurateur', 1);
 
 
 /*fake restaurant*/
 
-INSERT INTO restaurant (name, email, picture, description, category_id, draft) VALUES ('restaurant1', 'restaurant1@email.com', 'default', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum', 0, true);
-INSERT INTO restaurant (name, email, picture, description, category_id, draft) VALUES ('restaurant2', 'restaurant2@email.com', 'default', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum', 1, false);
-INSERT INTO restaurant (name, email, picture, description, category_id, draft) VALUES ('restaurant3', 'restaurant3@email.com', 'default', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum', 1, true);
+INSERT INTO restaurant (name, email, picture, description, category_id, draft, user_id) VALUES ('restaurant1', 'restaurant1@email.com', 'default', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum', 0, true, 3);
+INSERT INTO restaurant (name, email, picture, description, category_id, draft, user_id) VALUES ('restaurant2', 'restaurant2@email.com', 'default', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum', 1, false, 4);
+INSERT INTO restaurant (name, email, picture, description, category_id, draft, user_id) VALUES ('restaurant3', 'restaurant3@email.com', 'default', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum', 1, true, 5);
 
 /*restaurant category*/
 
