@@ -104,7 +104,23 @@ func (r *RestaurantStore) GetAllOpenRestaurant() ([]model.RestaurantItem, error)
 }
 
 func (r *RestaurantStore) GetOneRestaurantById(id int) (model.RestaurantItem, error) {
-	return model.RestaurantItem{}, nil
+    var restaurant model.RestaurantItem
+
+    rows, err := r.Query("SELECT * from restaurant WHERE id = ?", id)
+    if err != nil {
+        return model.RestaurantItem{}, err
+    }
+    defer rows.Close()
+
+    if rows.Next() {
+        err := rows.Scan(&restaurant.Id, &restaurant.Name, &restaurant.Email, &restaurant.Picture, &restaurant.Description, &restaurant.CategoryId, &restaurant.Draft, &restaurant.Open, &restaurant.UserId) // Assurez-vous d'inclure tous les champs
+        if err != nil {
+            return model.RestaurantItem{}, err
+        }
+        return restaurant, nil
+    }
+
+    return model.RestaurantItem{}, nil
 }
 
 func (r *RestaurantStore) GetAllRestaurantByCategory(id int) ([]model.RestaurantItem, error) {
@@ -120,6 +136,11 @@ func (r *RestaurantStore) DeleteRestaurant(id int) error {
 	return nil
 }
 
-func (r *RestaurantStore) UpdateRestaurantOpenState(id int, open bool) (bool, error) {
-	return false, nil
+func (r *RestaurantStore) UpdateStateRestaurant(id int, state bool) (error) {
+	_, err := r.Exec("UPDATE restaurant SET open = ? WHERE id = ?", state, id)
+
+	if err != nil {
+		return err
+	}
+	return err
 }

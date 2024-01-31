@@ -246,3 +246,37 @@ func CreateNewRestaurantCategory(c fiber.Ctx, stores *stores.Store, item model.R
 	})
 	return nil
 }
+
+func PatchStateRestaurant(c fiber.Ctx, stores *stores.Store, id int) error {
+    res, err := stores.GetOneRestaurantById(id)
+    if err != nil {
+        return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+            "data" : fiber.Map{
+				"error": err.Error(),
+			},
+        })
+    }
+
+    var newState bool
+    if res.Open {
+        newState = false
+    } else {
+        newState = true
+    }
+
+    err = stores.UpdateStateRestaurant(id, newState)
+    if err != nil {
+        return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+            "data" : fiber.Map{
+				"error": err.Error(),
+			},
+        })
+    }
+
+    return c.JSON(fiber.Map{
+		"data" : fiber.Map{
+			"state" : newState,
+		},
+    })
+}
+

@@ -48,6 +48,15 @@ func SetUpAdminRoute(route fiber.Router, myStore *stores.Store) {
 		return handlers.PatchDraftRestaurant(c, myStore, id)
 	})
 
+	//change l'état d'un restaurant (ouvert / fermé)
+	route.Patch("/restaurant/state/:restaurant_id", func(c fiber.Ctx) error {
+		id, err := strconv.Atoi(c.Params("restaurant_id"))
+		if err != nil {
+			fmt.Println("erreur durant la conversion string -> id")
+		}
+		return handlers.PatchStateRestaurant(c, myStore, id)
+	})
+
 	//créer une nouvelle catégorie de produits
 	route.Post("/restaurant/category", func(c fiber.Ctx) error {
 

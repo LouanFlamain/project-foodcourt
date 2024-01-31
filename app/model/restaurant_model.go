@@ -26,7 +26,7 @@ type RestaurantInterface interface {
 	GetAllRestaurantByCategory(category_id int) ([]RestaurantItem, error)
 	GetDraftRestaurant() ([]RestaurantItem, error)
 	DeleteRestaurant(id int) error
-	UpdateRestaurantOpenState(id int, open bool) (bool, error)
+	UpdateStateRestaurant(id int, state bool) error
 	UpdateDraftRestaurant(id int) error
 }
 
