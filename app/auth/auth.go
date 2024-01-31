@@ -50,9 +50,9 @@ func ValidateJWT(tokenString string) (*model.UserItem, error) {
 	return nil, errors.New("Invalid token")
 }
 
-func AuthenticateUser(db *sql.DB, username, password string) (*model.UserItem, error) {
+func AuthenticateUser(db *sql.DB, email, password string) (*model.UserItem, error) {
 	var user model.UserItem
-	err := db.QueryRow("SELECT id, username, email, password, picture, roles FROM users WHERE username = ?", username).Scan(&user.Id, &user.Username, &user.Email, &user.Password, &user.Picture, &user.Roles)
+	err := db.QueryRow("SELECT id, username, email, password, picture, roles FROM users WHERE email = ?", email).Scan(&user.Id, &user.Username, &user.Email, &user.Password, &user.Picture, &user.Roles)
 	if err != nil {
 		return nil, fmt.Errorf("User not found: %v", err)
 	}
