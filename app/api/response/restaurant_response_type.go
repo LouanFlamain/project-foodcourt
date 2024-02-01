@@ -17,4 +17,5 @@ type GetAllRestaurantResponseType struct {
 	Description string `json:"description"`
 	CategoryId int `json:"category_id"`
 	Open bool `json:"open"`
+	UserId int `json:"user_id"`
 }

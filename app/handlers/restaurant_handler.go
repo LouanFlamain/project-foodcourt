@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"foodcourt/app/api/request"
 	"foodcourt/app/api/response"
+	"foodcourt/app/auth"
 	"foodcourt/app/model"
 	"foodcourt/app/stores"
 
@@ -34,6 +35,7 @@ func GetAllOpenRestaurant(c fiber.Ctx, stores *stores.Store) error {
 			Description: restaurant.Description,
 			CategoryId:  restaurant.CategoryId,
 			Open:        restaurant.Open,
+			UserId: restaurant.UserId,
 		}
 	}
 
@@ -60,9 +62,10 @@ func CreateRestaurant(c fiber.Ctx, store *stores.Store, body request.CreateResta
 		return err
 	}
 	//création d'un utilisateur de type restaurateur
+	hashedPassword, err := auth.HashPassword(body.Password)
 	newUser := model.UserItem{
 		Username: body.Username,
-		Password: body.Password,
+		Password: hashedPassword,
 		Email: body.Email,
 		Roles: 1,
 	}

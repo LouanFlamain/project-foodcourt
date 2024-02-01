@@ -77,11 +77,11 @@ CREATE TABLE IF NOT EXISTS feedback (
 
 /*fake users*/
 
-INSERT INTO users (username, email, password, roles) VALUES ('admin', 'admin@email.com', 'admin', 2);
-INSERT INTO users (username, email, password, roles) VALUES ('client', 'client@email.com', 'client', 0);
-INSERT INTO users (username, email, password, roles) VALUES ('restaurateur', 'restaurateur@email.com', 'restaurateur', 1);
-INSERT INTO users (username, email, password, roles) VALUES ('restaurateur2', 'restaurateur2@email.com', 'restaurateur', 1);
-INSERT INTO users (username, email, password, roles) VALUES ('restaurateur3', 'restaurateur3@email.com', 'restaurateur', 1);
+INSERT INTO users (username, email, password, roles) VALUES ('admin', 'admin@admin.com', '$2a$14$5o/fhb57T/hbPZyrYmjbYe1vpU17CaEY4GvYQNfXf4RxBhYFDKIfu', 2);
+INSERT INTO users (username, email, password, roles) VALUES ('client', 'client@client.com', '$2a$14$mw1v2qkxJb2gWFypV4x0JuFI5L8dWx3JmTNTfM.JJKF4/86I4wWXa', 0);
+INSERT INTO users (username, email, password, roles) VALUES ('restaurateur', 'restaurateur@restaurateur.com', '$2a$14$HnMJ4li8JFt8Z2eDMP.38OI7WpRc8m8M45yEnfa75/nJOhRljQ6Im', 1);
+INSERT INTO users (username, email, password, roles) VALUES ('restau', 'restau@restau.com', '$2a$14$lEfQY9e/UYFGp.0PCHptq.xqYzaS1oBRae6xwMkgf1bsV6e49LfIO', 1);
+INSERT INTO users (username, email, password, roles) VALUES ('restau2', 'restau2@restau.com', '$2a$14$vsesRWLHmv/nRPK.E0dEQOFPtycMeRIrSvp5p/W.ki4.4ay1ZOawu', 1);
 
 
 /*fake restaurant*/

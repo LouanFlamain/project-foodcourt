@@ -40,7 +40,7 @@ func (r *RestaurantStore) GetAllRestaurant() ([]model.RestaurantItem, error) {
 
 	for rows.Next() {
 		var restaurant model.RestaurantItem
-		if err = rows.Scan(&restaurant.Id, &restaurant.Name, &restaurant.Email, &restaurant.Picture, &restaurant.Description, &restaurant.CategoryId, &restaurant.Draft, &restaurant.Open); err != nil {
+		if err = rows.Scan(&restaurant.Id, &restaurant.Name, &restaurant.Email, &restaurant.Picture, &restaurant.Description, &restaurant.CategoryId, &restaurant.Draft, &restaurant.Open, &restaurant.UserId); err != nil {
 			return []model.RestaurantItem{}, err
 		}
 
@@ -62,7 +62,7 @@ func (r *RestaurantStore) GetDraftRestaurant() ([]model.RestaurantItem, error) {
 
 	for rows.Next() {
 		var restaurant model.RestaurantItem
-		if err = rows.Scan(&restaurant.Id, &restaurant.Name, &restaurant.Email, &restaurant.Picture, &restaurant.Description, &restaurant.CategoryId, &restaurant.Draft, &restaurant.Open); err != nil {
+		if err = rows.Scan(&restaurant.Id, &restaurant.Name, &restaurant.Email, &restaurant.Picture, &restaurant.Description, &restaurant.CategoryId, &restaurant.Draft, &restaurant.Open, &restaurant.UserId); err != nil {
 			return []model.RestaurantItem{}, err
 		}
 
@@ -84,8 +84,7 @@ func (r *RestaurantStore) UpdateDraftRestaurant(id int) error {
 func (r *RestaurantStore) GetAllOpenRestaurant() ([]model.RestaurantItem, error) {
 	var restaurants []model.RestaurantItem
 
-	rows, err := r.Query("SELECT id, name, email, picture, description, category_id, open FROM restaurant WHERE open = ?", true)
-
+	rows, err := r.Query("SELECT id, name, email, picture, description, category_id, open, user_id FROM restaurant WHERE open = ?", true)
 	if err != nil {
 		return []model.RestaurantItem{}, err
 	}
@@ -94,7 +93,7 @@ func (r *RestaurantStore) GetAllOpenRestaurant() ([]model.RestaurantItem, error)
 
 	for rows.Next() {
 		var restaurant model.RestaurantItem
-		if err = rows.Scan(&restaurant.Id, &restaurant.Name, &restaurant.Email, &restaurant.Picture, &restaurant.Description, &restaurant.CategoryId, &restaurant.Open); err != nil {
+		if err = rows.Scan(&restaurant.Id, &restaurant.Name, &restaurant.Email, &restaurant.Picture, &restaurant.Description, &restaurant.CategoryId, &restaurant.Open, &restaurant.UserId); err != nil {
 			return []model.RestaurantItem{}, err
 		}
 		restaurants = append(restaurants, restaurant)
