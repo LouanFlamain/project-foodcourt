@@ -11,13 +11,14 @@ type UserItem struct {
 
 type UserInterface interface {
 	AddUser(item UserItem) (bool, error)
-	AddRestaurateur(item UserItem)(int, error)
+	AddRestaurateur(item UserItem) (int, error)
 	GetUsers() ([]UserItem, error)
 	GetOneUser(id int) (UserItem, error)
 	UpdateUser(user UserItem) (bool, error)
 	DeleteUser(id int) (bool, error)
-	GetOneUserByUsername(string)(UserItem, error)
-	VerifyUserByMail(string)(error)
+	GetOneUserByUsername(string) (UserItem, error)
+	GetOneUserByEmail(string) (UserItem, error)
+	VerifyUserByMail(string) error
 }
 
 type RolesItem struct {

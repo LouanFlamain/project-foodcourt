@@ -2,6 +2,7 @@ package routes
 
 import (
 	"foodcourt/app/handlers"
+	"foodcourt/app/middleware"
 	admin_routes "foodcourt/app/routes/admin"
 	auth_routes "foodcourt/app/routes/auth"
 	customer_routes "foodcourt/app/routes/customer"
@@ -26,13 +27,13 @@ func SetRoute(app *fiber.App, myStore *stores.Store) {
 	authGroup := api.Group("/auth")
 	auth_routes.SetUpAuthRoute(authGroup, myStore)
 
-	adminGroup := api.Group("/admin")
+	adminGroup := api.Group("/admin", middleware.AuthMiddleware)
 	admin_routes.SetUpAdminRoute(adminGroup, myStore)
 
-	customerGroup := api.Group("/customer")
+	customerGroup := api.Group("/customer", middleware.AuthMiddleware)
 	customer_routes.SetUpCustomerRoute(customerGroup, myStore)
 
-	sellerGroup := api.Group("/seller")
+	sellerGroup := api.Group("/seller", middleware.AuthMiddleware)
 	seller_routes.SetUpSellerRoute(sellerGroup, myStore)
 
 	api.Get("/test", func(c fiber.Ctx) error {
