@@ -12,7 +12,7 @@ services:
     environment:
       MARIADB_ROOT_PASSWORD: root
       MARIADB_DATABASE: foodcourt_db
-      #MARIADB_USER: louan
+      # MARIADB_USER: root
       #MARIADB_PASSWORD: MARIADB_PASSWORD
     healthcheck:
       test:

@@ -16,9 +16,8 @@ type CategoryTypeItem struct {
 
 
 type ProductInterface interface {
-	GetAllProducts(carte_id int)([]ProductItem, error)
-	DeleteProduct(carte_id int , id int)(error)
-
+	GetProductsByCarteId(carte_id int)([]ProductItem, error)
+	DeleteProductById(id int)(error)
 }
 
 

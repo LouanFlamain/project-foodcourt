@@ -11,6 +11,6 @@ type CarteItem struct {
 
 
 type CarteInterface interface {
-  GetMenuByRestaurantId(restaurantId int)(CarteItem,error)
+  GetCarteByRestaurantId(restaurantId int)(CarteItem,error)
 }
 
