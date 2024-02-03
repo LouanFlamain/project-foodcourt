@@ -27,13 +27,14 @@ func SetRoute(app *fiber.App, myStore *stores.Store) {
 	authGroup := api.Group("/auth")
 	auth_routes.SetUpAuthRoute(authGroup, myStore)
 
-	adminGroup := api.Group("/admin", middleware.AuthMiddleware)
+
+	adminGroup := api.Group("/admin", middleware.CheckAdminMiddleware(myStore, 3))
 	admin_routes.SetUpAdminRoute(adminGroup, myStore)
 
 	customerGroup := api.Group("/customer", middleware.AuthMiddleware)
 	customer_routes.SetUpCustomerRoute(customerGroup, myStore)
 
-	sellerGroup := api.Group("/seller", middleware.AuthMiddleware)
+	sellerGroup := api.Group("/seller", middleware.AuthMiddleware, middleware.CheckAdminMiddleware(myStore, 2))
 	seller_routes.SetUpSellerRoute(sellerGroup, myStore)
 
 	api.Get("/test", func(c fiber.Ctx) error {
