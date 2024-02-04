@@ -11,23 +11,29 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-var jwtKey = []byte("your-secret-key")
+var jwtKey = []byte("votre-clef-secrète")
 
-type Claims struct {
-	User model.UserItem `json:"user"`
+type UserClaims struct {
+	Id       int    `json:"id"`
+	Username string `json:"username"`
+	Email    string `json:"email"`
 	jwt.StandardClaims
 }
 
-func GenerateJWT(user model.UserItem) (string, error) {
-	claims := &Claims{
-		User: user,
+func GenerateJWT(userID int, username, email string) (string, error) {
+	expirationTime := time.Now().Add(24 * time.Hour)
+	claims := &UserClaims{
+		Id:       userID,
+		Username: username,
+		Email:    email,
 		StandardClaims: jwt.StandardClaims{
-			ExpiresAt: time.Now().Add(time.Hour * 24).Unix(),
+			ExpiresAt: expirationTime.Unix(),
 		},
 	}
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	tokenString, err := token.SignedString(jwtKey)
+
 	if err != nil {
 		return "", err
 	}
@@ -36,15 +42,20 @@ func GenerateJWT(user model.UserItem) (string, error) {
 }
 
 func ValidateJWT(tokenString string) (*model.UserItem, error) {
-	token, err := jwt.ParseWithClaims(tokenString, &Claims{}, func(token *jwt.Token) (interface{}, error) {
+	token, err := jwt.ParseWithClaims(tokenString, &UserClaims{}, func(token *jwt.Token) (interface{}, error) {
 		return jwtKey, nil
 	})
 	if err != nil {
 		return nil, err
 	}
 
-	if claims, ok := token.Claims.(*Claims); ok && token.Valid {
-		return &claims.User, nil
+	if claims, ok := token.Claims.(*UserClaims); ok && token.Valid {
+		user := &model.UserItem{
+			Id:       claims.Id,
+			Username: claims.Username,
+			Email:    claims.Email,
+		}
+		return user, nil
 	}
 
 	return nil, errors.New("Invalid token")

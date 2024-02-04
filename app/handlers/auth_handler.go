@@ -11,20 +11,19 @@ import (
 )
 
 func RegisterHandler(c fiber.Ctx, userStore *stores.Store, req request.RegisterRequest) error {
-
 	existingUser, err := userStore.GetOneUserByEmail(req.Email)
 	if err == nil && existingUser.Email != "" {
-		return c.JSON(response.ErrorResponse("Email already registered"))
+		return c.Status(fiber.StatusBadRequest).JSON(response.ErrorResponse("Email already registered"))
 	}
 
 	existingUser, err = userStore.GetOneUserByUsername(req.Username)
 	if err == nil && existingUser.Username != "" {
-		return c.JSON(response.ErrorResponse("Username already registered"))
+		return c.Status(fiber.StatusBadRequest).JSON(response.ErrorResponse("Username already registered"))
 	}
 
 	hashedPassword, err := auth.HashPassword(req.Password)
 	if err != nil {
-		return c.JSON(response.ErrorResponse("Error while hashing password"))
+		return c.Status(fiber.StatusInternalServerError).JSON(response.ErrorResponse("Error while hashing password"))
 	}
 
 	user := model.UserItem{
@@ -35,31 +34,31 @@ func RegisterHandler(c fiber.Ctx, userStore *stores.Store, req request.RegisterR
 
 	success, err := userStore.AddUser(user)
 	if !success || err != nil {
-		return c.JSON(response.ErrorResponse(err.Error()))
+		return c.Status(fiber.StatusInternalServerError).JSON(response.ErrorResponse(err.Error()))
 	}
 
-	token, err := auth.GenerateJWT(user)
+	token, err := auth.GenerateJWT(user.Id, user.Username, user.Email)
 	if err != nil {
-		return c.JSON(response.ErrorResponse("cannot generate token"))
+		return c.Status(fiber.StatusInternalServerError).JSON(response.ErrorResponse("cannot generate token"))
 	}
 
-	return c.JSON(response.SuccessResponse(fiber.Map{"token": token}))
+	return c.Status(fiber.StatusOK).JSON(response.SuccessResponse(fiber.Map{"token": token}))
 }
 
 func LoginHandler(c fiber.Ctx, userStore *stores.Store, req request.LoginRequest) error {
 	user, err := userStore.GetOneUserByEmail(req.Email)
 	if err != nil {
-		return c.JSON(response.ErrorResponse("Authentication failed"))
+		return c.Status(fiber.StatusUnauthorized).JSON(response.ErrorResponse("Authentication failed: User not found"))
 	}
 
 	if !auth.CheckPasswordHash(req.Password, user.Password) {
-		return c.JSON(response.ErrorResponse("Authentication failed"))
+		return c.Status(fiber.StatusUnauthorized).JSON(response.ErrorResponse("Authentication failed: Incorrect password"))
 	}
 
-	token, err := auth.GenerateJWT(user)
+	token, err := auth.GenerateJWT(user.Id, user.Username, user.Email)
 	if err != nil {
-		return c.JSON(response.ErrorResponse("Error while generating token"))
+		return c.Status(fiber.StatusInternalServerError).JSON(response.ErrorResponse("Error while generating token"))
 	}
 
-	return c.JSON(response.SuccessResponse(fiber.Map{"message": "login successful", "token": token}))
+	return c.Status(fiber.StatusOK).JSON(response.SuccessResponse(fiber.Map{"message": "Login successful", "token": token}))
 }

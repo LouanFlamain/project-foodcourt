@@ -98,6 +98,21 @@ func (u *UserStore) UpdateUser(user model.UserItem) (bool, error) {
 	return true, nil
 }
 
+func (u *UserStore) UpdateUserPassword(userID int, newPassword string) (bool, error) {
+	stmt, err := u.Prepare("UPDATE users SET password = ? WHERE id = ?")
+	if err != nil {
+		return false, err
+	}
+	defer stmt.Close()
+
+	_, err = stmt.Exec(newPassword, userID)
+	if err != nil {
+		return false, err
+	}
+
+	return true, nil
+}
+
 func (u *UserStore) DeleteUser(id int) (bool, error) {
 	stmt, err := u.Prepare("DELETE FROM users WHERE id = ?")
 	if err != nil {

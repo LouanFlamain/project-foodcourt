@@ -15,6 +15,7 @@ type UserInterface interface {
 	GetUsers() ([]UserItem, error)
 	GetOneUser(id int) (UserItem, error)
 	UpdateUser(user UserItem) (bool, error)
+	UpdateUserPassword(id int, password string) (bool, error)
 	DeleteUser(id int) (bool, error)
 	GetOneUserByUsername(string) (UserItem, error)
 	GetOneUserByEmail(string) (UserItem, error)
