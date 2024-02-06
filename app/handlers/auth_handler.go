@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"foodcourt/app/api/mercure"
 	"foodcourt/app/api/request"
 	"foodcourt/app/api/response"
 	"foodcourt/app/auth"
@@ -61,5 +62,11 @@ func LoginHandler(c fiber.Ctx, userStore *stores.Store, req request.LoginRequest
 		return c.JSON(response.ErrorResponse("Error while generating token"))
 	}
 
-	return c.JSON(response.SuccessResponse(fiber.Map{"message": "login successful", "token": token}))
+	mercure, err := mercure.GenerateJWT()
+
+	if err != nil {
+		return c.JSON(response.ErrorResponse("cannot generate mercure token"))
+	}
+
+	return c.JSON(response.SuccessResponse(fiber.Map{"message": "login successful", "token": token, "mercure" : mercure}))
 }
