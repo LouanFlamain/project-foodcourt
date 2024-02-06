@@ -10,9 +10,18 @@ import (
 	"foodcourt/app/stores"
 
 	"github.com/gofiber/fiber/v3"
+	"github.com/gofiber/fiber/v3/middleware/cors"
 )
 
 func SetRoute(app *fiber.App, myStore *stores.Store) {
+
+	//cors
+
+	app.Use(cors.New())
+	app.Use(cors.New(cors.Config{
+		AllowOrigins: "http://localhost:3000, http://localhost:3001",
+		AllowHeaders:  "Origin, Content-Type, Accept",
+	}))
 
 	//création du groupe d'url commençant par /api
 	api := app.Group("/api")
