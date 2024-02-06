@@ -4,6 +4,7 @@ import (
 	"foodcourt/app/handlers"
 	admin_routes "foodcourt/app/routes/admin"
 	auth_routes "foodcourt/app/routes/auth"
+	// carte_router "foodcourt/app/routes/carte"
 	customer_routes "foodcourt/app/routes/customer"
 	seller_routes "foodcourt/app/routes/seller"
 	"foodcourt/app/stores"

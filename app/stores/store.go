@@ -13,6 +13,8 @@ func CreateStore(db *sql.DB) *Store {
 		RolesInterface:              NewRolesStore(db),
 		CarteInterface:              NewCarteStore(db),
 		ProductInterface:            NewProductStore(db),
+		CommandeInterface:           NewCommandeStore(db),
+		
 	}
 }
 
@@ -23,4 +25,5 @@ type Store struct {
 	model.RolesInterface
 	model.CarteInterface
 	model.ProductInterface
+	model.CommandeInterface
 }

@@ -42,14 +42,31 @@ func (c *CarteStore) GetCarteByRestaurantId(restaurantId int)(model.CarteItem, e
 
 }
 
-func (c *CarteStore) DeleteCarteById(carte_id int) error {
-  _, err := c.Exec("DELETE FROM CARTE WHERE id = ?", carte_id)
+func(c *CarteStore)CreateCarte(carte model.CarteItem) (bool, error) {
+	stmt, err := c.Prepare("INSERT INTO carte (restaurant_id, description, price) VALUES (?, ?, ?)")
+	if err != nil {
+		return false, err
+	}
+	defer stmt.Close()
+
+	_, err = stmt.Exec(carte.RestaurantId , carte.Description , carte.Price)
+	if err != nil {
+		return false , err
+	}
+
+	return true, nil
+
+}
+
+func (c *CarteStore) DeleteCarteById(carte_id int)(bool, error) {
+
+  _, err := c.Exec("DELETE FROM carte WHERE id = ?", carte_id)
 
   if err != nil {
-	return err
+	return false, err
   }
 
-  return nil
+  return true,nil
   
 }
 

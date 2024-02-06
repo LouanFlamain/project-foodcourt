@@ -43,13 +43,30 @@ func (p *ProductStore) GetProductsByCarteId(carte_id int) ([]model.ProductItem, 
 
 	return productsArray, nil
 }
+func (p *ProductStore) CreateProduct(product model.ProductItem) (bool, error) {
 
-func (r *ProductStore) DeleteProductById(product_id int) error {
-	_, err := r.Exec("DELETE FROM product WHERE id = ?", product_id)
-	
+	stmt, err := p.Prepare("INSERT INTO product (product , price , carte_id , category_id) VALUE (?,?,?,?)")
+
 	if err != nil {
-		return err
-	  }
-	   
-	  return nil
+		return false, err
+	}
+	defer stmt.Close()
+
+	_, err = stmt.Exec(product.Produit, product.Price, product.CarteId, product.CategoryId)
+	if err != nil {
+		return false, err
+	}
+
+	return true, nil
+
+}
+
+func (p *ProductStore) DeleteProductById(product_id int) (bool, error) {
+	_, err := p.Exec("DELETE FROM product WHERE id = ?", product_id)
+
+	if err != nil {
+		return false, err
+	}
+
+	return true, nil
 }
