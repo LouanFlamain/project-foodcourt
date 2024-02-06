@@ -11,6 +11,10 @@ func CreateStore(db *sql.DB) *Store {
 		RestaurantInterface:         NewRestaurantStore(db),
 		RestaurantCategoryInterface: NewRestaurantCategoryStore(db),
 		RolesInterface:              NewRolesStore(db),
+		CarteInterface:              NewCarteStore(db),
+		ProductInterface:            NewProductStore(db),
+		CommandeInterface:           NewCommandeStore(db),
+		
 	}
 }
 
@@ -19,4 +23,7 @@ type Store struct {
 	model.RestaurantCategoryInterface
 	model.RestaurantInterface
 	model.RolesInterface
+	model.CarteInterface
+	model.ProductInterface
+	model.CommandeInterface
 }
