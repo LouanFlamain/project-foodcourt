@@ -8,6 +8,7 @@ import (
 	// carte_router "foodcourt/app/routes/carte"
 	customer_routes "foodcourt/app/routes/customer"
 	seller_routes "foodcourt/app/routes/seller"
+	user_routes "foodcourt/app/routes/user"
 	"foodcourt/app/stores"
 
 	"github.com/gofiber/fiber/v3"
@@ -37,6 +38,8 @@ func SetRoute(app *fiber.App, myStore *stores.Store) {
 	authGroup := api.Group("/auth")
 	auth_routes.SetUpAuthRoute(authGroup, myStore)
 
+	userGroup := api.Group("/user", middleware.AuthMiddleware)
+	user_routes.SetUpUserRoute(userGroup, myStore)
 
 	adminGroup := api.Group("/admin", middleware.CheckAdminMiddleware(myStore, 3))
 	admin_routes.SetUpAdminRoute(adminGroup, myStore)

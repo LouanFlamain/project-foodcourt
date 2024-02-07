@@ -9,6 +9,7 @@ services:
     volumes:
       - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
       - db_data:/var/lib/mysql
+
     environment:
       MARIADB_ROOT_PASSWORD: root
       MARIADB_DATABASE: foodcourt_db
@@ -39,6 +40,11 @@ services:
       - DB_PASSWORD=root
       - DB_HOST=database:3306
       - DB_NAME=foodcourt_db
+      - SMTP_HOST=${SMTP_HOST}
+      - SMTP_USER=${SMTP_USER}
+      - SMTP_PASS=${SMTP_PASS}
+      - EMAIL_FROM=${SMTP_USER}
+      - TEMPLATE_PATH=/app/app/templates
     depends_on:
       database:
         condition: service_healthy
