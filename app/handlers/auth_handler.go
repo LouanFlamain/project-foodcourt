@@ -10,20 +10,25 @@ import (
 	"github.com/gofiber/fiber/v3"
 )
 
-func RegisterHandler(c fiber.Ctx, userStore *stores.Store, req request.RegisterRequest) error {
+func RegisterHandler(c fiber.Ctx, userStore *stores.Store, req request.RegisterRequest) (*fiber.Map, error) {
+	var errorResponse fiber.Map
+
 	existingUser, err := userStore.GetOneUserByEmail(req.Email)
 	if err == nil && existingUser.Email != "" {
-		return c.Status(fiber.StatusBadRequest).JSON(response.ErrorResponse("Email already registered"))
+		errorResponse = response.ErrorResponse("Email already registered")
+		return &errorResponse, nil
 	}
 
 	existingUser, err = userStore.GetOneUserByUsername(req.Username)
 	if err == nil && existingUser.Username != "" {
-		return c.Status(fiber.StatusBadRequest).JSON(response.ErrorResponse("Username already registered"))
+		errorResponse = response.ErrorResponse("Username already registered")
+		return &errorResponse, nil
 	}
 
 	hashedPassword, err := auth.HashPassword(req.Password)
 	if err != nil {
-		return c.Status(fiber.StatusInternalServerError).JSON(response.ErrorResponse("Error while hashing password"))
+		errorResponse = response.ErrorResponse("Error while hashing password")
+		return &errorResponse, nil
 	}
 
 	user := model.UserItem{
@@ -34,15 +39,18 @@ func RegisterHandler(c fiber.Ctx, userStore *stores.Store, req request.RegisterR
 
 	success, err := userStore.AddUser(user)
 	if !success || err != nil {
-		return c.Status(fiber.StatusInternalServerError).JSON(response.ErrorResponse(err.Error()))
+		errorResponse = response.ErrorResponse(err.Error())
+		return &errorResponse, nil
 	}
 
 	token, err := auth.GenerateJWT(user.Id, user.Username, user.Email)
 	if err != nil {
-		return c.Status(fiber.StatusInternalServerError).JSON(response.ErrorResponse("cannot generate token"))
+		errorResponse = response.ErrorResponse("Cannot generate token")
+		return &errorResponse, nil
 	}
 
-	return c.Status(fiber.StatusOK).JSON(response.SuccessResponse(fiber.Map{"token": token}))
+	responseData := response.SuccessResponse(fiber.Map{"token": token})
+	return &responseData, nil
 }
 
 func LoginHandler(c fiber.Ctx, userStore *stores.Store, req request.LoginRequest) error {
