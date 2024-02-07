@@ -5,6 +5,7 @@ import (
 	"foodcourt/app/middleware"
 	admin_routes "foodcourt/app/routes/admin"
 	auth_routes "foodcourt/app/routes/auth"
+
 	// carte_router "foodcourt/app/routes/carte"
 	customer_routes "foodcourt/app/routes/customer"
 	seller_routes "foodcourt/app/routes/seller"
@@ -41,7 +42,7 @@ func SetRoute(app *fiber.App, myStore *stores.Store) {
 	userGroup := api.Group("/user", middleware.AuthMiddleware)
 	user_routes.SetUpUserRoute(userGroup, myStore)
 
-	adminGroup := api.Group("/admin", middleware.CheckAdminMiddleware(myStore, 3))
+	adminGroup := api.Group("/admin", middleware.AuthMiddleware)
 	admin_routes.SetUpAdminRoute(adminGroup, myStore)
 
 	customerGroup := api.Group("/customer", middleware.AuthMiddleware)
