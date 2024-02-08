@@ -10,13 +10,9 @@ import (
 	"github.com/gofiber/fiber/v3"
 )
 
-type User struct {
-	Id int `json:"id"`
-}
 
 type PayloadParse struct {
-	User User `json:"user"`
-	Exp  int  `json:"exp"`
+	Id int `json:"id"`
 }
 
 func decodeBase64UrlSafe(encoded string) (string, error) {
@@ -62,7 +58,7 @@ func splitJWT(tokenString string) (string, string, string, error) {
 	return header, payload, signature, nil
 }
 
-func CheckAdminMiddleware(store *stores.Store, roleId int) fiber.Handler {
+func CheckPermissionMiddleware(store *stores.Store, roleId int) fiber.Handler {
 	return func(c fiber.Ctx) error {
 		authHeader := c.Get("Authorization")
 		var tokenString string
@@ -86,13 +82,14 @@ func CheckAdminMiddleware(store *stores.Store, roleId int) fiber.Handler {
 			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Invalid payload"})
 		}
 
-		user, err := store.GetOneUser(payloadParser.User.Id)
+		user, err := store.GetOneUser(payloadParser.Id)
 
 		if err != nil {
 			return c.Status(fiber.ErrBadGateway.Code).JSON(fiber.Map{
 				"data": fiber.Map{
 					"success": false,
 					"error":   err,
+					"fail": true,
 				},
 			})
 		}
