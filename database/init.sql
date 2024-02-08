@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS commande (
     date DATETIME NOT NULL,
     user_id INT NOT NULL,
     restaurant_id INT NOT NULL,
-    content VARCHAR(255) NOT NULL,
+    content JSON NOT NULL,
     commentaire VARCHAR(255),
     state INT NOT NULL DEFAULT 0
 );
