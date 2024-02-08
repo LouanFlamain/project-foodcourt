@@ -51,7 +51,6 @@ func SetUpCustomerRoute(route fiber.Router, myStore *stores.Store) {
 	route.Post("/commande/create", func(c fiber.Ctx) error {
 		var body request.CreateCommande
 
-		
 		err := json.Unmarshal(c.Body(), &body)
 		if err != nil {
 			// Gérer l'erreur si le JSON est mal formé
@@ -59,8 +58,13 @@ func SetUpCustomerRoute(route fiber.Router, myStore *stores.Store) {
 				"error": "cannot parse JSON",
 			})
 		}
+	
+		content := make([]interface{}, len(body.Content))
+		copy(content, body.Content)
+	
+
 		return handlers.CreateCommande(c, myStore, model.CommandeItem{Date: body.Date , UserId: body.UserId ,
-			 RestaurantId: body.RestaurantId , Content: body.Content , Commentaire: body.Commentaire , State: body.State})
+			 RestaurantId: body.RestaurantId , Content: content , Commentaire: body.Commentaire , State: body.State})
 
 	})
 

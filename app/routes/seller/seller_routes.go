@@ -77,7 +77,7 @@ func SetUpSellerRoute(route fiber.Router, myStore *stores.Store) {
 	})
 
 	// GET commande by id 
-	route.Get("/commande/restaurant/:id", func(c fiber.Ctx) error {
+	route.Get("/commande/:id", func(c fiber.Ctx) error {
 		commandeID, err := strconv.Atoi(c.Params("id"))
 		if err != nil {
 			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
@@ -89,7 +89,7 @@ func SetUpSellerRoute(route fiber.Router, myStore *stores.Store) {
 		return handlers.GetCommandeById(c, myStore, commandeID)
 	})
 	// GET commande by restaurantId 
-	route.Get("/commande/:id", func(c fiber.Ctx) error {
+	route.Get("/commande/restaurant/:id", func(c fiber.Ctx) error {
 		commandeID, err := strconv.Atoi(c.Params("id"))
 		if err != nil {
 			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
@@ -120,7 +120,7 @@ func SetUpSellerRoute(route fiber.Router, myStore *stores.Store) {
 				"success": false,
 			})
 		}
-		return handlers.UpdateCommande(c, myStore, body.State, commandeID)
+		return handlers.UpdateCommande(c, myStore, commandeID,model.CommandeItem{State: body.State}  )
 
 	})
 
