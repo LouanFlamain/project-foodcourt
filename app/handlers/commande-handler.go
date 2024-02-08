@@ -50,10 +50,9 @@ func GetCommandeById(c fiber.Ctx, CommandeStore *stores.Store, id int) error {
 		return err
 	}
 	err = c.JSON(fiber.Map{
-		"data": fiber.Map{
-			"succes": res,
-		},
+		"data": res,
 	})
+	
 	return err
 }
 
@@ -74,17 +73,15 @@ func GetAllCommandeByRestaurantId(c fiber.Ctx, CommandeStore *stores.Store, id i
 		return err
 	}
 	err = c.JSON(fiber.Map{
-		"data": fiber.Map{
-			"succes": res,
-		},
+		"data": res,
 	})
 	return err
 }
 
 // Update Commande 
-func UpdateCommande(c fiber.Ctx, CommandeStore *stores.Store, id int , state int) error {
-
-	_, err := CommandeStore.UpdateCommande(id , state)
+func UpdateCommande(c fiber.Ctx, CommandeStore *stores.Store, id int , commande model.CommandeItem) error {
+     
+	_, err := CommandeStore.UpdateCommande(id , commande)
 
 	if err != nil {
 		err = c.JSON(fiber.Map{

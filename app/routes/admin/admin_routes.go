@@ -156,7 +156,6 @@ func SetUpAdminRoute(route fiber.Router, myStore *stores.Store) {
 	route.Post("/commande/create", func(c fiber.Ctx) error {
 		var body request.CreateCommande
 
-		
 		err := json.Unmarshal(c.Body(), &body)
 		if err != nil {
 			// Gérer l'erreur si le JSON est mal formé
@@ -164,13 +163,18 @@ func SetUpAdminRoute(route fiber.Router, myStore *stores.Store) {
 				"error": "cannot parse JSON",
 			})
 		}
+	
+		content := make([]interface{}, len(body.Content))
+		copy(content, body.Content)
+	
+
 		return handlers.CreateCommande(c, myStore, model.CommandeItem{Date: body.Date , UserId: body.UserId ,
-			 RestaurantId: body.RestaurantId , Content: body.Content , Commentaire: body.Commentaire , State: body.State})
+			 RestaurantId: body.RestaurantId , Content: content , Commentaire: body.Commentaire , State: body.State})
 
 	})
 
 	// GET commande by id 
-	route.Get("/commande/restaurant/:id", func(c fiber.Ctx) error {
+	route.Get("/commande/:id", func(c fiber.Ctx) error {
 		commandeID, err := strconv.Atoi(c.Params("id"))
 		if err != nil {
 			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
@@ -182,7 +186,7 @@ func SetUpAdminRoute(route fiber.Router, myStore *stores.Store) {
 		return handlers.GetCommandeById(c, myStore, commandeID)
 	})
 	// GET commande by restaurantId 
-	route.Get("/commande/:id", func(c fiber.Ctx) error {
+	route.Get("/commande/restaurant/:id", func(c fiber.Ctx) error {
 		commandeID, err := strconv.Atoi(c.Params("id"))
 		if err != nil {
 			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
@@ -212,7 +216,7 @@ func SetUpAdminRoute(route fiber.Router, myStore *stores.Store) {
 				"success": false,
 			})
 		}
-		return handlers.UpdateCommande(c, myStore, body.State, commandeID)
+		return handlers.UpdateCommande(c, myStore, commandeID,model.CommandeItem{State: body.State}  )
 
 	})
 

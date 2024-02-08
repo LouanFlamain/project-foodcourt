@@ -23,10 +23,9 @@ func GetCarteByRestaurantId(c fiber.Ctx, carteStore *stores.Store, restaurant_id
 		return err
 	}
 	err = c.JSON(fiber.Map{
-		"data": fiber.Map{
-			"succes": res,
-		},
+		"data": res,
 	})
+	
 	return err
 }
 
@@ -89,10 +88,9 @@ func GetProductsByCarteId(c fiber.Ctx, ProductStore *stores.Store, carte_id int)
 		return err
 	}
 	err = c.JSON(fiber.Map{
-		"data": fiber.Map{
-			"succes": res,
-		},
+		"data": res,
 	})
+
 	return err
 }
 
