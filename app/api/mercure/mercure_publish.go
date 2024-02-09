@@ -25,23 +25,5 @@ func PublishUpdate(topic, data, jwt string) error {
     return nil
 }
 
-/*fonction de publish 
-
-func main() {
-    jwt, err := GenerateJWT()
-    if err != nil {
-        panic(err)
-    }
-
-    topic := "http://example.com/books/1"
-    data := "This is a test message"
-
-    err = PublishUpdate(topic, data, jwt)
-    if err != nil {
-        panic(err)
-    }
-}
-
-*/
 
 

@@ -105,32 +105,34 @@ INSERT INTO roles(name) VALUES ('admin');
 
 -- carte
 
-INSERT INTO carte (restaurant_id, description, price) VALUES
-
-(1, 'Plat 1', 10.99),
-(2, 'Plat 2', 12.99),
-(3, 'Plat 3', 8.99);
+INSERT INTO carte (restaurant_id, description, price) VALUES (1, 'Plat 1', 10.99);
+INSERT INTO carte (restaurant_id, description, price) VALUES (2, 'Plat 2', 12.99);
+INSERT INTO carte (restaurant_id, description, price) VALUES (3, 'Plat 3', 8.99);
 
 -- FIN
 
 -- product
 
-INSERT INTO product (product, price, carte_id, category_id) VALUES
-
-('Produit 1', 5.99, 1, 1),
-('Produit 2', 8.99, 1, 2),
-('Produit 3', 6.99, 2, 1),
-('Produit 4', 10.99, 2, 3),
-('Produit 5', 4.99, 3, 2);
+INSERT INTO product (product, price, carte_id, category_id) VALUES ('Produit 1', 5.99, 1, 1);
+INSERT INTO product (product, price, carte_id, category_id) VALUES ('Produit 2', 8.99, 1, 2);
+INSERT INTO product (product, price, carte_id, category_id) VALUES ('Produit 3', 6.99, 2, 1);
+INSERT INTO product (product, price, carte_id, category_id) VALUES ('Produit 4', 10.99, 2, 3);
+INSERT INTO product (product, price, carte_id, category_id) VALUES ('Produit 5', 4.99, 3, 2);
 
 -- FIN
 
 -- product_category_type
 
-INSERT INTO product_category_type (name) VALUES
-('Entrée'),
-('Plat principal'),
-('Dessert');
+INSERT INTO product_category_type (name) VALUES ('Entrée');
+INSERT INTO product_category_type (name) VALUES ('Plat principal');
+INSERT INTO product_category_type (name) VALUES ('Dessert');
+
+-- commande_state
+
+INSERT INTO commande_state (name) VALUES ('commandé');
+INSERT INTO commande_state (name) VALUES ('en cours de préparation');
+INSERT INTO commande_state (name) VALUES ('en attente de récupération');
+INSERT INTO commande_state (name) VALUES ('finish');
 
 -- FIN
 
