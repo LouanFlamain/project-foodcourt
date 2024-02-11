@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS users (
     email VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL,
     picture VARCHAR(255) NOT NULL DEFAULT 'default',
-    roles INT NOT NULL DEFAULT 0
+    roles INT NOT NULL DEFAULT 1
 );
 
 CREATE TABLE IF NOT EXISTS roles (
