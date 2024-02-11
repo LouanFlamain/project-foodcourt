@@ -67,7 +67,7 @@ func CreateRestaurant(c fiber.Ctx, store *stores.Store, body request.CreateResta
 		Username: body.Username,
 		Password: hashedPassword,
 		Email: body.Email,
-		Roles: 1,
+		Roles: 2,
 	}
 	id, err := store.AddRestaurateur(newUser)
 	if err != nil {

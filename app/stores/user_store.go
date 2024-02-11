@@ -16,13 +16,13 @@ func NewUserStore(db *sql.DB) *UserStore {
 }
 
 func (u *UserStore) AddUser(user model.UserItem) (bool, error) {
-	stmt, err := u.Prepare("INSERT INTO users (username, email, password, picture, roles) VALUES (?, ?, ?, ?, ?)")
+	stmt, err := u.Prepare("INSERT INTO users (username, email, password) VALUES (?, ?, ?)")
 	if err != nil {
 		return false, err
 	}
 	defer stmt.Close()
 
-	_, err = stmt.Exec(user.Username, user.Email, user.Password, user.Picture, user.Roles)
+	_, err = stmt.Exec(user.Username, user.Email, user.Password)
 	if err != nil {
 		return false, err
 	}
