@@ -124,5 +124,18 @@ func SetUpSellerRoute(route fiber.Router, myStore *stores.Store) {
 
 	})
 
+	// On récupére la carte des restaurant 
+	route.Get("/carte/:id", func(c fiber.Ctx) error {
+		restaurantID, err := strconv.Atoi(c.Params("id"))
+		if err != nil {
+			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+				"error":   "Invalid restaurant_id",
+				"success": false,
+			})
+		}
+
+		return handlers.GetCarteByRestaurantId(c, myStore, restaurantID)
+	})
+
 }
 
