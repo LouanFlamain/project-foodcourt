@@ -25,6 +25,7 @@ type CommandeInterface interface {
 	GetCommandeById(id int) (CommandeItem, error)
 	GetCommandeByUserId(id int) (CommandeItem, error)
 	GetAllCommandeByRestaurantId(id int) ([]CommandeItem, error)
+	GetAllCommandeByUserId(id int) ([]CommandeItem, error)
 	UpdateCommande(id int, commade CommandeItem) (bool, error)
 }
 type CommandeStateInterface interface {

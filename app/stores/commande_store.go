@@ -124,6 +124,49 @@ func (c *CommandeStore) GetAllCommandeByRestaurantId(id int) ([]model.CommandeIt
 
 	return commandesArray, nil
 }
+func (c *CommandeStore) GetAllCommandeByUserId(id int) ([]model.CommandeItem, error) {
+	var commandesArray []model.CommandeItem
+
+	rows, err := c.Query("SELECT * FROM commande WHERE user_id = ?", id)
+
+	if err != nil {
+		return []model.CommandeItem{}, err
+	}
+
+	defer rows.Close()
+
+	for rows.Next() {
+
+		var commande model.CommandeItem
+		var dateStr string
+		var contentJSON []byte
+		err := rows.Scan(&commande.Id, &dateStr, &commande.UserId, &commande.RestaurantId, &contentJSON, &commande.Commentaire, &commande.State)
+
+		if err != nil {
+			return []model.CommandeItem{}, err
+		}
+		// Convertir la chaîne de date en time.Time
+		commande.Date, err = time.Parse("2006-01-02 15:04:05", dateStr)
+		if err != nil {
+			return []model.CommandeItem{}, err
+		}
+
+		// Convertir le JSON en tableau d'entiers
+		var content []interface{}
+		if err := json.Unmarshal(contentJSON, &content); err != nil {
+			return nil, err
+		}
+		commande.Content = content
+
+		commandesArray = append(commandesArray, commande)
+	}
+
+	if err := rows.Err(); err != nil {
+		return []model.CommandeItem{}, err
+	}
+
+	return commandesArray, nil
+}
 func (c *CommandeStore) UpdateCommande(id int, commade model.CommandeItem) (bool, error) {
 
 	stmt, err := c.Prepare("UPDATE commande SET state = ? WHERE id = ?")

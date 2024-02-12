@@ -84,8 +84,7 @@ func GetAllCommandeByRestaurantId(c fiber.Ctx, CommandeStore *stores.Store, id i
 
 func GetAllCommandeByUserId(c fiber.Ctx, CommandeStore *stores.Store, id int) error {
 
-	res, err := CommandeStore.GetAllCommandeByRestaurantId(id)
-	fmt.Println("ceci est l'erreur" , err)
+	res, err := CommandeStore.GetAllCommandeByUserId(id)
 
 	if err != nil {
 		err = c.JSON(fiber.Map{
