@@ -31,4 +31,5 @@ type CreateCommande struct {
 
 type UpdateCommande struct {
 	State        int       `json:"state"`
+	Mercure string `json:"mercure"`
 }

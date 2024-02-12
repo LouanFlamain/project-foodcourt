@@ -3,11 +3,12 @@ package mercure
 import (
 	"bytes"
 	"net/http"
+	"net/url"
 )
 
 func PublishUpdate(topic, data, jwt string) error {
-    requestData := bytes.NewBufferString("topic=" + topic + "&data=" + data)
-    request, err := http.NewRequest("POST", "http://localhost:9090/.well-known/mercure", requestData)
+    requestData := bytes.NewBufferString("topic=" + url.QueryEscape(topic) + "&data=" + url.QueryEscape(data))
+    request, err := http.NewRequest("POST", "http://host.docker.internal:9090/.well-known/mercure", requestData)
     if err != nil {
         return err
     }

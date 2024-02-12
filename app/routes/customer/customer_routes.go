@@ -68,4 +68,17 @@ func SetUpCustomerRoute(route fiber.Router, myStore *stores.Store) {
 
 	})
 
+	// GET commande by UserId 
+	route.Get("/commande/restaurant/:id", func(c fiber.Ctx) error {
+		commandeID, err := strconv.Atoi(c.Params("id"))
+		if err != nil {
+			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+				"error":   "Invalid restaurant_id",
+				"success": false,
+			})
+		}
+
+		return handlers.GetAllCommandeByRestaurantId(c, myStore, commandeID)
+	})
+
 }

@@ -120,7 +120,7 @@ func SetUpSellerRoute(route fiber.Router, myStore *stores.Store) {
 				"success": false,
 			})
 		}
-		return handlers.UpdateCommande(c, myStore, commandeID,model.CommandeItem{State: body.State}  )
+		return handlers.UpdateCommande(c, myStore, commandeID,model.CommandeItem{State: body.State}, body.Mercure  )
 
 	})
 

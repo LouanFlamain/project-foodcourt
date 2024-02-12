@@ -141,3 +141,40 @@ func (c *CommandeStore) UpdateCommande(id int, commade model.CommandeItem) (bool
 	}
 	return true, nil
 }
+
+func (c *CommandeStore) GetCommandeByUserId(id int) (model.CommandeItem, error) {
+	var commande model.CommandeItem
+
+	rows, err := c.Query("SELECT * FROM commande WHERE user_id = ?", id)
+	if err != nil {
+		return commande, err
+	}
+	defer rows.Close()
+
+	if rows.Next() {
+		var dateStr string
+		var contentJSON string
+		err := rows.Scan(&commande.Id, &dateStr, &commande.UserId, &commande.RestaurantId, &contentJSON, &commande.Commentaire, &commande.State)
+		if err != nil {
+			return commande, err
+		}
+
+		// Convertir la chaîne de date en time.Time
+		commande.Date, err = time.Parse("2006-01-02 15:04:05", dateStr)
+		if err != nil {
+			return commande, err
+		}
+
+		// Décodez le contenu JSON dans la structure de données Go appropriée
+		var content []interface{}
+		err = json.Unmarshal([]byte(contentJSON), &content)
+		if err != nil {
+			return commande, err
+		}
+		commande.Content = content
+
+		return commande, nil
+	} else {
+		return commande, sql.ErrNoRows
+	}
+}
